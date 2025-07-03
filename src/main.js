@@ -134,7 +134,7 @@ class LunchProposal {
 
       if (instructionsElement.classList.contains("line-clamp-4")) {
         instructionsElement.classList.remove("line-clamp-4");
-        button.textContent = "← Show less";
+        button.textContent = "←";
       } else {
         instructionsElement.classList.add("line-clamp-4");
         button.textContent = "Show full recipe →";
