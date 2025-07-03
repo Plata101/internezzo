@@ -324,7 +324,7 @@ class LunchProposal {
           <button class="text-gray-400 transition-colors remove-favorite hover:text-red-500" data-meal-id="${
             favorite.idMeal
           }" title="Remove from favorites">
-            <span class="text-lg">×</span>
+            <span class="text-lg cursor-pointer">×</span>
           </button>
         </div>
       </div>
