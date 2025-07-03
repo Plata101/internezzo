@@ -6,6 +6,128 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>internezzo lunch - Daily Lunch Proposals</title>
     <link href="/src/style.css" rel="stylesheet" />
+
+    <!-- Google Translate -->
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "de",
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false,
+          },
+          "google_translate_element"
+        );
+      }
+    </script>
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
+
+    <!-- Custom Google Translate Styling -->
+    <style>
+      /* Hide Google Translate banner */
+      .goog-te-banner-frame.skiptranslate {
+        display: none !important;
+      }
+
+      body {
+        top: 0px !important;
+      }
+
+      /* Container styling */
+      .translate-widget {
+        position: relative;
+      }
+
+      /* Custom button styling to match your design */
+      .goog-te-combo {
+        appearance: none;
+        background: linear-gradient(to right, #f97316, #dc2626);
+        border: none;
+        border-radius: 9999px;
+        padding: 8px 16px;
+        font-size: 14px;
+        font-weight: 500;
+        color: white;
+        cursor: pointer;
+        outline: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        min-width: 120px;
+        font-family: inherit;
+      }
+
+      .goog-te-combo:hover {
+        background: linear-gradient(to right, #ea580c, #b91c1c);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        transform: translateY(-1px);
+      }
+
+      .goog-te-combo:focus {
+        box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.3);
+      }
+
+      /* Add a custom arrow */
+      .goog-te-combo {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 8px center;
+        background-repeat: no-repeat;
+        background-size: 16px 16px;
+        padding-right: 32px;
+      }
+
+      /* Style the gadget container */
+      .skiptranslate {
+        font-family: inherit !important;
+      }
+
+      .goog-te-gadget {
+        font-family: inherit !important;
+        font-size: 0 !important;
+        color: transparent !important;
+      }
+
+      .goog-te-gadget .goog-te-combo {
+        margin: 0 !important;
+      }
+
+      /* Hide all text elements */
+      .goog-te-gadget > span {
+        display: none !important;
+      }
+
+      .goog-te-gadget > span > a {
+        display: none !important;
+      }
+
+      /* Style the dropdown options */
+      .goog-te-combo option {
+        background-color: white;
+        color: #374151;
+        padding: 8px;
+      }
+
+      /* Add language icon before the dropdown */
+      .translate-widget::before {
+        content: "🌐";
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1;
+        pointer-events: none;
+        font-size: 14px;
+      }
+
+      .goog-te-combo {
+        padding-left: 36px;
+      }
+    </style>
   </head>
   <body>
     <div class="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
@@ -22,12 +144,63 @@
               <h1 class="text-2xl font-bold text-gray-800">internezzo</h1>
               <span class="font-medium text-orange-500">lunch</span>
             </div>
-            <button
-              id="new-proposal-btn"
-              class="px-6 py-2 text-white bg-gradient-to-r from-orange-500 to-red-500 rounded-full shadow-lg transition-all duration-300 transform hover:from-orange-600 hover:to-red-600 hover:shadow-xl hover:scale-105"
-            >
-              New Proposal
-            </button>
+            <div class="flex items-center space-x-4">
+              <!-- Favorites Dropdown -->
+              <div class="relative">
+                <button
+                  id="favorites-btn"
+                  class="flex items-center px-4 py-2 space-x-2 text-white bg-gradient-to-r from-purple-500 to-pink-500 rounded-full shadow-lg transition-all duration-300 transform cursor-pointer hover:from-purple-600 hover:to-pink-600 hover:shadow-xl"
+                  title="View Favorites"
+                >
+                  <span>♥</span>
+                  <span>Favorites</span>
+                  <span
+                    id="favorites-count"
+                    class="px-2 py-0.5 ml-1 text-xs text-black bg-white bg-opacity-20 rounded-full"
+                    >0</span
+                  >
+                </button>
+                <div
+                  id="favorites-dropdown"
+                  class="hidden overflow-y-auto absolute right-0 z-50 mt-2 w-80 max-h-96 bg-white rounded-lg border border-gray-200 shadow-xl"
+                >
+                  <div class="p-4 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-800">
+                      Your Favorites
+                    </h3>
+                  </div>
+                  <div id="favorites-list" class="p-2">
+                    <div class="p-8 text-center text-gray-500">
+                      <span class="text-4xl">♥</span>
+                      <p class="mt-2">No favorites yet</p>
+                      <p class="text-sm text-gray-400">
+                        Click the heart on any meal to save it!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Hidden Google Translate -->
+              <div
+                id="google_translate_element"
+                class="translate-widget"
+                style="display: none"
+              ></div>
+              <!-- Custom Language Toggle -->
+              <button
+                id="language-toggle"
+                class="px-4 py-2 text-white bg-gradient-to-r from-orange-500 to-red-500 rounded-full shadow-lg transition-all duration-300 transform cursor-pointer hover:opacity-80 hover:shadow-xl"
+                title="Switch Language"
+              >
+                <span id="language-text">EN</span>
+              </button>
+              <button
+                id="new-proposal-btn"
+                class="px-6 py-2 text-white bg-gradient-to-r from-orange-500 to-red-500 rounded-full shadow-lg transition-all duration-300 transform cursor-pointer hover:opacity-80 hover:shadow-xl"
+              >
+                New Proposal
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -60,7 +233,7 @@
         <!-- Meal Card -->
         <div id="meal-card" class="hidden">
           <div
-            class="overflow-hidden bg-white rounded-3xl shadow-2xl transition-all duration-500 transform hover:scale-105"
+            class="overflow-hidden bg-white rounded-3xl shadow-2xl transition-all duration-500 transform"
           >
             <div class="relative">
               <img
@@ -93,10 +266,19 @@
             </div>
 
             <div class="p-8">
-              <h3
-                id="meal-title"
-                class="mb-4 text-3xl font-bold text-gray-800"
-              ></h3>
+              <div class="flex justify-between items-center mb-4">
+                <h3
+                  id="meal-title"
+                  class="flex-1 text-3xl font-bold text-gray-800"
+                ></h3>
+                <button
+                  id="favorite-heart"
+                  class="p-2 ml-4 text-3xl transition-all duration-300 transform cursor-pointer hover:scale-110 focus:outline-none"
+                  title="Add to favorites"
+                >
+                  <span id="heart-icon">♡</span>
+                </button>
+              </div>
               <p
                 id="meal-category"
                 class="mb-4 font-semibold tracking-wide text-orange-500 uppercase"
@@ -182,7 +364,7 @@
               <div class="mt-8 text-center">
                 <button
                   id="another-proposal-btn"
-                  class="px-8 py-3 text-white bg-gradient-to-r from-orange-500 to-red-500 rounded-full shadow-lg transition-all duration-300 transform hover:from-orange-600 hover:to-red-600 hover:shadow-xl hover:scale-105"
+                  class="px-8 py-3 text-white bg-gradient-to-r from-orange-500 to-red-500 rounded-full shadow-lg transition-all duration-300 transform hover:opacity-80 hover:shadow-xl hover:scale-105"
                 >
                   Get Another Proposal
                 </button>
@@ -202,7 +384,7 @@
           </p>
           <button
             id="retry-btn"
-            class="px-6 py-2 text-white bg-gradient-to-r from-orange-500 to-red-500 rounded-full transition-all duration-300 hover:from-orange-600 hover:to-red-600"
+            class="px-6 py-2 text-white bg-gradient-to-r from-orange-500 to-red-500 rounded-full transition-all duration-300 hover:opacity-80"
           >
             Try Again
           </button>
